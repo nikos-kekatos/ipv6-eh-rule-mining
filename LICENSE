@@ -22,9 +22,16 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 ---
-The MIT license above covers the scripts in this repository. Third-party
-components are under their own licenses and are NOT redistributed here:
-  * The JAMES dataset (data/ CSVs are derived from it) — Apache-2.0,
+The MIT license above covers the scripts in the top-level code/ directory only.
+Third-party components carry their own licenses:
+
+  * PSIMiner (the mining engine) — GPL-3.0. An unmodified copy of its source is
+    vendored under third_party/psiminer/ (pinned to upstream commit b0d0316);
+    its GPL-3.0 license text is at third_party/psiminer/LICENSE and governs that
+    subdirectory. The MIT scripts invoke the compiled psiMiner binary as a
+    separate program and do not link against it (mere aggregation).
+    Upstream: https://github.com/antoniobruto/PSIMiner
+
+  * The JAMES dataset (data/ CSVs are derived from it) — Apache-2.0. The raw
+    pcaps are NOT redistributed here.
     https://gitlab.uliege.be/Benoit.Donnet/james
-  * PSIMiner (the mining engine) — GPL-3.0,
-    https://github.com/antoniobruto/PSIMiner

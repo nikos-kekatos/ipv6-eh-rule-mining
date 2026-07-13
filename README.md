@@ -42,7 +42,10 @@ results/  reproducible outputs (ablation grid, 21-vantage rule table)
   `t,nxt,plen,icmpv6_type,l4,iat,hlim,flow,label`. Raw pcaps are **not** redistributed
   here; regenerate with `pcap_to_csv.py` from the JAMES release if desired.
 - The mining engine **PSIMiner** (Bruto da Costa & Dasgupta, JAIR 2021; GPL-3.0) is
-  **not bundled**; build it from <https://github.com/antoniobruto/PSIMiner>.
+  **vendored unmodified** under [`third_party/psiminer/`](third_party/psiminer/)
+  (pinned to upstream commit `b0d0316`); build it from there (see `INSTALL.md`).
+  It remains a separate GPL-3.0 work; the MIT scripts invoke its binary as a
+  separate program. Upstream: <https://github.com/antoniobruto/PSIMiner>.
 
 ## Reproduce
 

@@ -23,13 +23,14 @@ Then:
 python3 code/pcap_to_csv.py <received_traffic.pcap> data/james_<vantage>_recv2.csv 1
 ```
 
-## 3. PSIMiner (the mining engine, GPL-3.0 — not bundled)
+## 3. PSIMiner (the mining engine, GPL-3.0 — bundled under `third_party/psiminer/`)
+An unmodified copy of PSIMiner's source is vendored in this repo (pinned to
+upstream commit `b0d0316`; see `third_party/psiminer/UPSTREAM.md`). Build it:
 ```bash
-git clone https://github.com/antoniobruto/PSIMiner
-cd PSIMiner && bash build.sh        # requires C/C++ compilers, flex, bison, python
-# copy the built binary next to the configs, invoked as ./psiMiner <config>.conf
+cd third_party/psiminer && bash build.sh   # requires a C compiler, flex, bison
+# produces build/psiMiner; copy it next to the configs, invoked as ./psiMiner <config>.conf
 ```
-macOS deps: `xcode-select --install` (compilers), `brew install flex bison`.
+macOS deps: `xcode-select --install` (compiler), `brew install flex bison`.
 
 ## 4. (optional) LLM rule-miner baseline
 `llm_rule_miner.py` calls the Anthropic API; set `ANTHROPIC_API_KEY`.
