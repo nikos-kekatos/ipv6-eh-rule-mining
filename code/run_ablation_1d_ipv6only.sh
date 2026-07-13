@@ -6,7 +6,7 @@
 # Originals are preserved: this writes to a new OUTDIR.
 set +e
 
-BASE=james_ams_v3_tFRAG.conf   # IPv6-only vocab, recv2.csv
+BASE=example_frag.conf   # IPv6-only vocab, target HAS_FRAG_EH, recv2.csv
 OUTDIR=ablation_ams_1d_ipv6only
 rm -rf $OUTDIR
 mkdir -p $OUTDIR
@@ -17,9 +17,11 @@ run_one() {
   local tag="${axis}_sl${sl}_dp${dp}_dr${dr_label}"
   local conf="$OUTDIR/${tag}.conf"
   cp $BASE $conf
-  sed -i '' "s|^seqLength=.*|seqLength=${sl}|"  $conf
-  sed -i '' "s|^depth=.*|depth=${dp}|"          $conf
-  sed -i '' "s|^delayRes=.*|delayRes=${dr}|"    $conf
+  # Portable in-place edit (BSD/macOS sed and GNU/Linux sed differ on -i).
+  sed_i() { sed "$1" "$2" > "$2.tmp" && mv "$2.tmp" "$2"; }
+  sed_i "s|^seqLength=.*|seqLength=${sl}|"  $conf
+  sed_i "s|^depth=.*|depth=${dp}|"          $conf
+  sed_i "s|^delayRes=.*|delayRes=${dr}|"    $conf
   ./psiMiner $conf > $OUTDIR/${tag}.log 2>&1
   rc=$?
   ASRT="$OUTDIR/${tag}-assertions.txt"

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Rigorous train/test evaluation of the decision-tree baseline.
 
-The prior baseline (exp/baseline_decision_tree.py) reported only training
+The prior baseline (baseline_decision_tree.py) reported only training
 accuracy (train == test == full data). A reviewer flagged the absence of a
 train/test protocol. This script fixes that by reporting:
 
@@ -35,7 +35,7 @@ MAX_DEPTH = 5
 RANDOM_STATE = 0
 
 # IPv6-only predicate features, exactly as the paper uses them
-# (see exp/james_ams_tFRAG.conf / exp/baseline_decision_tree.py).
+# (see example_frag.conf / baseline_decision_tree.py).
 EH_FLAGS = [
     ("HAS_HBH_EH", 0),
     ("HAS_RT_EH", 43),

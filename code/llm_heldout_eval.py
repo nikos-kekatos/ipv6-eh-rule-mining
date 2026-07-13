@@ -21,8 +21,9 @@ import random
 
 from rule_validator import eval_rule
 
-CSV_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)),
-                        "james_ams_recv2.csv")
+CSV_PATH = os.path.join(
+    os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+    "data", "james_ams_recv2.csv")
 SEEDS = (2026, 2027, 2028)
 N_SAMPLE = 200
 

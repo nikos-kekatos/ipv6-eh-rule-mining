@@ -56,7 +56,7 @@ See [`INSTALL.md`](INSTALL.md) for dependencies. Then, e.g.:
 python3 code/rule_validator.py data/james_ams_recv2.csv "!PLEN_MED" 0 4 "!HAS_FRAG_EH"
 
 # the RS1-RS5 rule taxonomy (coverage/confidence/lift, ordered vs permuted)
-python3 code/rule_suite_eval.py            # writes rule_suite_eval.txt
+python3 code/rule_suite_eval.py            # prints the RS1-RS6 suite to stdout
 
 # hole-free 1-D ablation (needs the PSIMiner binary on PATH as ./psiMiner)
 bash code/run_ablation_1d_ipv6only.sh
@@ -65,3 +65,19 @@ bash code/run_ablation_1d_ipv6only.sh
 ## Citing
 
 If you use this artifact, please cite the paper and the JAMES dataset.
+
+## Additional controls (this revision)
+
+```bash
+# RS2 permutation delta: is the positive-delay MED=>FRAG score within-packet or probe-burst?
+python3 code/rs2_permutation_delta.py            # ordered 79.2% -> permuted 59.3% (base rate)
+
+# positive control: protocol correctly FLAGS a genuine cross-packet rule
+python3 code/positive_control.py                 # synthetic 2-lag rule 99.99% -> 59.0% under permutation
+
+# multi-bucket search across the six EH targets (needs ./psiMiner + base_frag.conf)
+bash  code/multibucket/run_multibucket.sh
+python3 code/multibucket/parse_multibucket.py    # best per bucket-count: 1->93.0%, 2->24.8%, 3->2.3%
+```
+`results/` holds the regenerated snapshots (per-target assertions, run timings,
+and the MAWI 2025-12-31 IPv6 next-header distribution).

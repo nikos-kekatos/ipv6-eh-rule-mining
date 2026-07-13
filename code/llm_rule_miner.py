@@ -93,7 +93,7 @@ def sample_rows(rows, k, seed):
     return rng.sample(rows, min(k, len(rows)))
 
 
-def call_llm(prompt, model="claude-opus-4-7", temperature=0.7):
+def call_llm(prompt, model="claude-opus-4-8", temperature=0.7):
     if Anthropic is None:
         raise RuntimeError("anthropic SDK not installed; "
                            "pip install anthropic")

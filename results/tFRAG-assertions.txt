@@ -1,0 +1,7 @@
+ASSERTION LIST: 
+
+
+****************** TARGET [HAS_FRAG_EH] ********************
+!PLEN_MED|=> ##[ 0.000000 : 4.000000 ] !HAS_FRAG_EH
+SUPPORT		= [80.435524]
+CORRELATION	= [93.039854]

@@ -2,7 +2,7 @@
 """Independently permute each predicate column.
 
 Destroys the within-row joint distribution: nxt is decoupled
-from plen, from iat, etc. Tests whether the rule depends on
+from plen, from hlim, from flow. Tests whether the rule depends on
 the FRAG-EH <-> PLEN_MED association at all.
 """
 import csv
@@ -17,8 +17,10 @@ with open(src, newline="") as f:
     header = next(rd)
     rows = list(rd)
 
-# columns: t=0, nxt=1, plen=2, icmpv6_type=3, l4=4, iat=5, label=6
-for col in (1, 2, 3, 4, 5):
+# columns: t=0, nxt=1, plen=2, icmpv6_type=3, l4=4, iat=5,
+#          hlim=6, flow=7, label=8
+# Independently shuffle the predicate tuple (nxt, plen, hlim, flow).
+for col in (1, 2, 6, 7):
     vals = [r[col] for r in rows]
     rng.shuffle(vals)
     for r, v in zip(rows, vals):

@@ -1,33 +1,40 @@
 #!/usr/bin/env python3
 """Cross-vantage bootstrap CI on the multi-vantage correlation band.
 
-Treats the 10 observed per-vantage correlations as a sample
-from the population of plausible vantages, and reports the
-B=10000 percentile CI for the mean.
+Treats the 21 observed per-vantage correlations (results/james21_multivantage.csv)
+as a sample from the population of plausible vantages, and reports the
+B=10000 percentile CI for the mean. A fixed RNG seed makes it reproducible.
 """
+import csv
+import os
 import random
 import statistics
-import sys
 
-# Correlations from Table 1 (paper), in same order.
-data = [
-    ("fra", 98.89),
-    ("nyc", 98.36),
-    ("sgp", 97.21),
-    ("blr", 94.91),
-    ("lon", 94.74),
-    ("mad", 94.38),
-    ("eze", 94.37),
-    ("tyo", 94.31),
-    ("ams", 93.04),
-    ("syd", 89.45),
-]
+HERE = os.path.dirname(os.path.abspath(__file__))
+CSV_PATH = os.path.join(os.path.dirname(HERE), "results",
+                        "james21_multivantage.csv")
 
-corrs = [c for _, c in data]
+
+def load_corrs(path):
+    """Read the per-vantage correlations (percent) from the multi-vantage CSV."""
+    corrs = []
+    with open(path, newline="") as f:
+        for row in csv.DictReader(f):
+            c = (row.get("corr") or "").strip()
+            if not c:            # skip sentinel rows (e.g. JAMES21_DONE)
+                continue
+            try:
+                corrs.append(float(c))
+            except ValueError:
+                continue
+    return corrs
+
+
+corrs = load_corrs(CSV_PATH)
 n = len(corrs)
 print(f"observed: n={n}, mean={statistics.mean(corrs):.2f}, "
       f"min={min(corrs):.2f}, max={max(corrs):.2f}, "
-      f"sd={statistics.stdev(corrs):.2f}")
+      f"sd={statistics.pstdev(corrs):.2f}")
 
 rng = random.Random(2026)
 B = 10000

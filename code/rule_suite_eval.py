@@ -25,8 +25,9 @@ from bisect import bisect_left, bisect_right
 from rule_validator import PREDICATE_DEFS, parse_bool
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-MAIN_CSV = os.path.join(HERE, "james_ams_recv2.csv")
-LABELED_CSV = os.path.join(HERE, "survivability", "james_ams_labeled.csv")
+DATA = os.path.join(os.path.dirname(HERE), "data")
+MAIN_CSV = os.path.join(DATA, "james_ams_recv2.csv")
+LABELED_CSV = os.path.join(DATA, "james_ams_labeled.csv")
 
 
 # ---------------------------------------------------------------------------

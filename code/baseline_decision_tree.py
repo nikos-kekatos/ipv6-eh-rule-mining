@@ -22,7 +22,7 @@ from sklearn.tree import DecisionTreeClassifier, export_text
 
 def bucketise(df):
     df = df.copy()
-    # PSIMiner-equivalent predicates (see exp/james_ams_tFRAG.conf).
+    # PSIMiner-equivalent predicates (see example_frag.conf).
     df["HAS_HBH_EH"]    = (df["nxt"] == 0).astype(int)
     df["HAS_RT_EH"]     = (df["nxt"] == 43).astype(int)
     df["HAS_FRAG_EH"]   = (df["nxt"] == 44).astype(int)

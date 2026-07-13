@@ -1,10 +1,13 @@
 #!/usr/bin/env python3
 """Row-permute predicate columns while keeping timestamps in place.
 
-Inputs:  CSV with header t,nxt,plen,icmpv6_type,l4,iat,label
-Output:  CSV in the same schema with the predicate block
-         (nxt, plen, icmpv6_type, l4, iat) permuted across rows.
-The label column is left as-is.
+Inputs:  CSV with header t,nxt,plen,icmpv6_type,l4,iat,hlim,flow,label
+Output:  CSV in the same schema with the predicate tuple
+         (nxt, plen, hlim, flow) jointly permuted across rows.
+The joint-row permutation keeps each (nxt,plen,hlim,flow) tuple intact
+but reassigns whole tuples to new rows, preserving the within-tuple
+joint distribution while destroying its alignment to time/label.
+Other columns (icmpv6_type, l4, iat, label) are left as-is.
 """
 import csv
 import random
@@ -18,7 +21,9 @@ with open(src, newline="") as f:
     header = next(rd)
     rows = list(rd)
 
-pred_cols = [1, 2, 3, 4, 5]
+# columns: t=0, nxt=1, plen=2, icmpv6_type=3, l4=4, iat=5,
+#          hlim=6, flow=7, label=8
+pred_cols = [1, 2, 6, 7]  # (nxt, plen, hlim, flow)
 block = [[r[c] for c in pred_cols] for r in rows]
 rng.shuffle(block)
 for r, b in zip(rows, block):
